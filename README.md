@@ -14,22 +14,37 @@ You are required to help the manager to predict the right group of the new custo
 
 ## Neural Network Model
 
-Include the neural network model diagram.
+<img width="787" height="787" alt="image" src="https://github.com/user-attachments/assets/13a1ab90-3062-45c3-8ed3-0ac72833deae" />
 
-## DESIGN STEPS
+DESIGN STEPS
+3 STEP 1: Import necessary libraries and load the dataset.
 
-### STEP 1:
-Write your own steps
+STEP 2:
+Encode categorical variables and normalize numerical features.
 
-### STEP 2:
+STEP 3:
+Split the dataset into training and testing subsets.
 
-### STEP 3:
+STEP 4:
+Design a multi-layer neural network with appropriate activation functions.
+
+STEP 5:
+Train the model using an optimizer and loss function.
+
+STEP 6:
+Evaluate the model and generate a confusion matrix.
+
+STEP 7:
+Use the trained model to classify new data samples.
+
+STEP 8:
+Display the confusion matrix, classification report, and predictions.
 
 
 ## PROGRAM
 
-### Name: 
-### Register Number:
+### Name: SELVARANI S
+### Register Number:212224040301
 
 ```python
 class PeopleClassifier(nn.Module):
@@ -78,4 +93,4 @@ Include Classification Report here
 Include your sample input and output here
 
 ## RESULT
-Include your result here
+Thus, a neural network classification model for the given dataset as been created successfully.
