@@ -47,85 +47,47 @@ Display the confusion matrix, classification report, and predictions.
 ### Register Number:212224040301
 
 ```
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.metrics import confusion_matrix, classification_report
-from torch.utils.data import TensorDataset, DataLoader
-
-dataset = pd.read_csv('/customer.csv')
-print("Dataset Preview:\n", dataset.head())
-
-X = dataset.iloc[:, :-1].values
-y = dataset.iloc[:, -1].values
-
-encoder = LabelEncoder()
-y = encoder.fit_transform(y)
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
-X_train = torch.tensor(X_train, dtype=torch.float32)
-X_test = torch.tensor(X_test, dtype=torch.float32)
-y_train = torch.tensor(y_train, dtype=torch.long)
-y_test = torch.tensor(y_test, dtype=torch.long)
-
-train_dataset = TensorDataset(X_train, y_train)
-train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
-
 class PeopleClassifier(nn.Module):
-    def __init__(self, input_size, classes):
-        super().__init__()
-        self.fc1 = nn.Linear(input_size,16)
-        self.fc2 = nn.Linear(16,8)
-        self.fc3 = nn.Linear(8,classes)
+    def __init__(self, input_size):
+        super(PeopleClassifier, self).__init__()
+        self.fc1 = nn.Linear(input_size, 16)
+        self.fc2 = nn.Linear(16, 8)
+        self.fc3 = nn.Linear(8, 4) 
 
-    def forward(self,x):
-        x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        x = self.fc3(x)
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)  
         return x
+```
+```
+# Initialize the Model, Loss Function, and Optimizer
+model = PeopleClassifier(input_size=X_train.shape[1])
+criterion =nn.CrossEntropyLoss()
+optimizer =optim.Adam(model.parameters(), lr=0.001)
 
-model = PeopleClassifier(X_train.shape[1], len(encoder.classes_))
-
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.01)
-
-for epoch in range(100):
-    for xb,yb in train_loader:
+```
+```
+def train_model(model, train_loader, criterion, optimizer, epochs):
+  for epoch in range(epochs):
+    model.train()
+    for X_batch, y_batch in train_loader:
         optimizer.zero_grad()
-        out = model(xb)
-        loss = criterion(out,yb)
+        outputs = model(X_batch)
+        loss = criterion(outputs, y_batch)
         loss.backward()
         optimizer.step()
 
-print("\nTraining Completed")
-
-model.eval()
-with torch.no_grad():
-    preds = torch.argmax(model(X_test), dim=1)
-
-print("\nConfusion Matrix:")
-print(confusion_matrix(y_test,preds))
-
-print("\nClassification Report:")
-print(classification_report(y_test,preds,target_names=encoder.classes_,zero_division=0))
-
-
-
+    if (epoch + 1) % 10 == 0:
+        print(f'Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}')
 ```
 
 
 
 ## Dataset Information
 
-<img width="449" height="463" alt="image" src="https://github.com/user-attachments/assets/f6cd4471-dd08-4ed8-a2ab-1165d80570ea" />
+<img width="1492" height="290" alt="image" src="https://github.com/user-attachments/assets/94fe2b85-add9-4ec2-b36d-52c5a1833254" />
+
 
 
 ## OUTPUT
@@ -134,17 +96,18 @@ print(classification_report(y_test,preds,target_names=encoder.classes_,zero_divi
 
 ### Confusion Matrix
 
-<img width="583" height="372" alt="Screenshot 2026-02-05 225926" src="https://github.com/user-attachments/assets/cf748df5-83f9-46e3-aa41-4fcbe98f8ee8" />
+<img width="772" height="654" alt="image" src="https://github.com/user-attachments/assets/c59ed3b2-9df2-4a61-85a6-78e243f9037a" />
+
 
 
 ### Classification Report
-<img width="669" height="273" alt="Screenshot 2026-02-05 225939" src="https://github.com/user-attachments/assets/2ab8f015-4e7d-4c79-a853-853a7598df35" />
+<img width="812" height="442" alt="image" src="https://github.com/user-attachments/assets/17040b53-d025-48cb-822c-050535782301" />
 
 
 
 ### New Sample Data Prediction
 
-<img width="980" height="253" alt="Screenshot 2026-02-05 225859" src="https://github.com/user-attachments/assets/17ba2ff5-9693-47c5-ad18-338671c83bcc" />
+<img width="1197" height="323" alt="image" src="https://github.com/user-attachments/assets/02b336ec-3edb-42c9-98ee-440d92bbf078" />
 
 
 ## RESULT
