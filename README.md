@@ -14,7 +14,8 @@ You are required to help the manager to predict the right group of the new custo
 
 ## Neural Network Model
 
-<img width="787" height="787" alt="image" src="https://github.com/user-attachments/assets/13a1ab90-3062-45c3-8ed3-0ac72833deae" />
+<img width="940" height="858" alt="image" src="https://github.com/user-attachments/assets/72d0cf0c-be16-4665-9c19-a79e43468d3c" />
+
 
 DESIGN STEPS
 3 STEP 1: Import necessary libraries and load the dataset.
@@ -108,7 +109,8 @@ def train_model(model, train_loader, criterion, optimizer, epochs):
 
 ### New Sample Data Prediction
 
-<img width="1197" height="323" alt="image" src="https://github.com/user-attachments/assets/02b336ec-3edb-42c9-98ee-440d92bbf078" />
+<img width="1096" height="335" alt="image" src="https://github.com/user-attachments/assets/cf5c01f8-04b7-4189-ae68-56981839a1a3" />
+
 
 
 ## RESULT
